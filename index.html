@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>弦外之音 · 青瓷乐韵</title>
+    <title>弦外之音 · 青瓷乐韵 | 宋代美学在线音乐播放器</title>
     <meta name="description" content="弦外之音 · 青瓷乐韵 - 融合宋代美学与现代听感的在线音乐播放器。支持网易云音乐搜索，提供实时歌词显示、翻译功能和个人歌单管理。">
-    <meta name="keywords" content="在线音乐播放器,宋代美学,网易云音乐,歌词翻译,个人歌单,音乐下载,青瓷风格">
+    <meta name="keywords" content="弦外之音,在线音乐播放器,宋代美学,网易云音乐,歌词翻译,个人歌单,音乐下载,青瓷风格">
     <meta name="author" content="弦外之音">
     <meta name="robots" content="index, follow">
     <meta property="og:title" content="弦外之音 · 青瓷乐韵 | 宋代美学在线音乐播放器">
     <meta property="og:description" content="融合宋代美学与现代听感的在线音乐播放器，支持网易云音乐搜索和歌词翻译功能。">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="xianwai.piz7j.cn">
+    <meta property="og:url" content="https://xianwai.piz7j.cn/">
     <style>
         :root {
             --bg-primary: #F5F9F9; --bg-secondary: #EDF4F4; --bg-tertiary: #E5EEEE;
@@ -189,7 +189,7 @@
         <div class="about-content">
             <div class="about-section">
                 <h3><i class="fas fa-music"></i> 使用方法</h3>
-                <p>1. 点击右下角搜索按钮或直接使用键盘快捷键 Ctrl+F 打开搜索框</p>
+                <p>1. 点击右下角搜索按钮或直接使用键盘快捷键 Ctrl+K 打开搜索框</p>
                 <p>2. 输入歌曲名或歌手名进行搜索</p>
                 <p>3. 点击搜索结果中的歌曲开始播放</p>
                 <p>4. 使用底部播放器控制播放、暂停、上一首、下一首等</p>
@@ -432,12 +432,68 @@
             audioPlayer.addEventListener('canplay',()=>loadingEl.style.display='none');
             window.addEventListener('click',function(e){if(e.target===searchModal)searchModal.classList.remove('active');
                 if(e.target===resultsModal)resultsModal.classList.remove('active');if(e.target===aboutModal)aboutModal.classList.remove('active');});
-            document.addEventListener('keydown',function(e){if(e.ctrlKey&&e.key==='f'){e.preventDefault();searchModal.classList.add('active');searchInput.focus();}
-                if(e.key==='Escape'){searchModal.classList.remove('active');resultsModal.classList.remove('active');aboutModal.classList.remove('active');playlistModal.classList.remove('active');}
-                if(audioPlayer.src){switch(e.key){case' ':e.preventDefault();if(audioPlayer.paused){audioPlayer.play();playBtn.innerHTML='<i class="fas fa-pause"></i>';}
-                else{audioPlayer.pause();playBtn.innerHTML='<i class="fas fa-play"></i>';}break;case'ArrowLeft':e.preventDefault();if(audioPlayer.currentTime>5)audioPlayer.currentTime-=5;break;
-                case'ArrowRight':e.preventDefault();audioPlayer.currentTime+=5;break;case'l':case'L':e.preventDefault();loopBtn.click();break;case'n':case'N':e.preventDefault();nextBtn.click();break;
-                case'p':case'P':e.preventDefault();prevBtn.click();break;case't':case'T':if(e.ctrlKey)break;e.preventDefault();toggleTranslation();break;}}});});
+            document.addEventListener('keydown',function(e){
+                const activeElement = document.activeElement;
+                const isInputActive = activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA';
+                
+                if(e.ctrlKey && e.key === 'k') {
+                    e.preventDefault();
+                    if(!isInputActive) {
+                        searchModal.classList.add('active');
+                        searchInput.focus();
+                    }
+                }
+                if(e.key === 'Escape') {
+                    searchModal.classList.remove('active');
+                    resultsModal.classList.remove('active');
+                    aboutModal.classList.remove('active');
+                    playlistModal.classList.remove('active');
+                }
+                
+                if(audioPlayer.src && !isInputActive) {
+                    switch(e.key) {
+                        case ' ':
+                            e.preventDefault();
+                            if(audioPlayer.paused) {
+                                audioPlayer.play();
+                                playBtn.innerHTML='<i class="fas fa-pause"></i>';
+                            } else {
+                                audioPlayer.pause();
+                                playBtn.innerHTML='<i class="fas fa-play"></i>';
+                            }
+                            break;
+                        case 'ArrowLeft':
+                            e.preventDefault();
+                            if(audioPlayer.currentTime > 5) audioPlayer.currentTime -= 5;
+                            break;
+                        case 'ArrowRight':
+                            e.preventDefault();
+                            audioPlayer.currentTime += 5;
+                            break;
+                        case 'l':
+                        case 'L':
+                            e.preventDefault();
+                            loopBtn.click();
+                            break;
+                        case 'n':
+                        case 'N':
+                            e.preventDefault();
+                            nextBtn.click();
+                            break;
+                        case 'p':
+                        case 'P':
+                            e.preventDefault();
+                            prevBtn.click();
+                            break;
+                        case 't':
+                        case 'T':
+                            e.preventDefault();
+                            toggleTranslation();
+                            break;
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>
